@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <iterator>
 #include <string>
 #include <vector>
 
@@ -17,6 +19,7 @@ int main() {
     bool monatsausgabe(const string & month, const string jahresMonat[]);
     bool tagesausgabe(int day);
     void fehlermeldung();
+    void dateiErstellen();
 
     cout << "***Datumsausgabe***";
     leer;
@@ -30,7 +33,6 @@ int main() {
     {  
         fehlermeldung();
         return 0;
-       
 	}
     leer;
     cout << "Bitte geben Sie den Tag ein: ";
@@ -42,6 +44,9 @@ int main() {
         return 0;
     }
     cout << " year: " + date + " month: " + month + " day: " + day;
+
+    //eingabe wird als txt.file gespeichert.
+    dateiErstellen();
     return 0;
 }
 
@@ -82,3 +87,21 @@ void fehlermeldung()
     cout << "Fehlerhafte Eingabe!";
     return;
 }
+void dateiErstellen()
+{
+    // Ausgabe in eine Datei
+    //Du brauchst ostream_iterator hier nicht, weil du nur einen String schreiben willst – kein Array von Strings.
+    // output_file << ... ist in C++ der Standardweg, um Dateien mit einfachem Text zu füllen.
+
+    ofstream output_file("output.txt");
+
+    if (!output_file) {
+        cout << "Fehler beim Erstellen der Datei!" << endl;
+        return;
+    }
+
+    output_file << "Datum: " << day << ". " << month << " " << date << endl;
+
+    output_file.close(); // Gute Praxis
+    return;
+    }
