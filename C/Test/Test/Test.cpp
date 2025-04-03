@@ -16,6 +16,7 @@ string jahresMonat[12] = { "Januar","Februar","März","April","Mai","Juni","Juli"
 int main() {
     bool monatsausgabe(const string & month, const string jahresMonat[]);
     bool tagesausgabe(int day);
+    void fehlermeldung();
 
     cout << "***Datumsausgabe***";
     leer;
@@ -27,9 +28,9 @@ int main() {
     //Funktion wird direkt in der If Abfrage aufgerufen und gleichzeitig auf true oder false ggeprüft!
     if (!monatsausgabe(month, jahresMonat))
     {  
-        cout << "\a";
-		cout << "Fehlerhafte Eingabe!";
-		return 0;
+        fehlermeldung();
+        return 0;
+       
 	}
     leer;
     cout << "Bitte geben Sie den Tag ein: ";
@@ -37,17 +38,15 @@ int main() {
     int intday=stoi(day);
     if (!tagesausgabe(intday))
     {
-		cout << "\a";
-        cout << "Fehlerhafte Eingabe!";
+        fehlermeldung(); 
         return 0;
     }
     cout << " year: " + date + " month: " + month + " day: " + day;
-
     return 0;
 }
 
 
-// Funktion um den Monat zu überprüfen
+
 bool monatsausgabe(const string& month,const string jahresMonat[])
 {
    
@@ -66,7 +65,6 @@ bool monatsausgabe(const string& month,const string jahresMonat[])
     }
     return false;
 }
-
 bool tagesausgabe(int day)
 {
     if (day > 31 || day < 1)
@@ -78,4 +76,9 @@ bool tagesausgabe(int day)
 		return true;
 	}
 }
-
+void fehlermeldung()
+{
+    cout << "\a";
+    cout << "Fehlerhafte Eingabe!";
+    return;
+}
