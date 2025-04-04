@@ -12,41 +12,55 @@ string month;
 string day;
 string date;
 string jahresMonat[12] = { "Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember" };
+string eingabe;
 #define leer cout << "\n";
 
 
-int main() {
+int main()
+{
     bool monatsausgabe(const string & month, const string jahresMonat[]);
     bool tagesausgabe(int day);
     void fehlermeldung();
     void dateiErstellen();
 
-    cout << "***Datumsausgabe***";
-    leer;
-    cout << "Bitte geben Sie das Jahr ein: ";
-    getline(cin, date);
-    leer;
-    cout << "Bitte geben Sie den Monat ein: ";
-    getline(cin, month);
-    //Funktion wird direkt in der If Abfrage aufgerufen und gleichzeitig auf true oder false ggeprüft!
-    if (!monatsausgabe(month, jahresMonat))
-    {  
-        fehlermeldung();
-        return 0;
-	}
-    leer;
-    cout << "Bitte geben Sie den Tag ein: ";
-    getline(cin, day);
-    int intday=stoi(day);
-    if (!tagesausgabe(intday))
-    {
-        fehlermeldung(); 
-        return 0;
-    }
-    cout << " year: " + date + " month: " + month + " day: " + day;
-
-    //eingabe wird als txt.file gespeichert.
-    dateiErstellen();
+    do {
+        cout << "***Datumsausgabe***";
+        leer;
+        cout << "Bitte geben Sie das Jahr ein: ";
+        getline(cin, date);
+        leer;
+        cout << "Bitte geben Sie den Monat ein: ";
+        getline(cin, month);
+            //Funktion wird direkt in der If Abfrage aufgerufen und gleichzeitig auf true oder false ggeprüft!
+            if (!monatsausgabe(month, jahresMonat))
+            {  
+                fehlermeldung();
+                return 0;
+	        }
+        leer;
+        cout << "Bitte geben Sie den Tag ein: ";
+        getline(cin, day);
+        int intday=stoi(day);
+            if (!tagesausgabe(intday))
+            {
+                fehlermeldung(); 
+                return 0;
+            }
+        cout << " year: " + date + " month: " + month + " day: " + day;
+        leer;
+        //eingabe wird als txt.file gespeichert.
+        dateiErstellen();
+        cout <<"Sollen weitere Eingaben erfolgen? (j/n) \n";
+        getline(cin, eingabe);  
+            if (eingabe == "j")
+            {
+                continue;
+            }
+            if (eingabe == "n" || eingabe != "j")
+            {
+                break;
+            }
+    } while (eingabe =="j");
     return 0;
 }
 
@@ -92,8 +106,8 @@ void dateiErstellen()
     // Ausgabe in eine Datei
     //Du brauchst ostream_iterator hier nicht, weil du nur einen String schreiben willst – kein Array von Strings.
     // output_file << ... ist in C++ der Standardweg, um Dateien mit einfachem Text zu füllen.
-
-    ofstream output_file("output.txt");
+    //ios:app sorgt dafür, dass neue Inhalte hinten an die Datei angehängt werden.
+    ofstream output_file("output.txt",ios::app);
 
     if (!output_file) {
         cout << "Fehler beim Erstellen der Datei!" << endl;
